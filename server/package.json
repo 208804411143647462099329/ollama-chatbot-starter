@@ -1,0 +1,26 @@
+{
+  "name": "ollama-chatbot-starter",
+  "version": "1.0.0",
+  "description": "Starter project for a chatbot using Ollama, Node/Express backend, and simple frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "Ollama",
+    "Chatbot",
+    "Express",
+    "Node"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
