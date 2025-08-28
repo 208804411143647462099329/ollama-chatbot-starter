@@ -1,0 +1,60 @@
+web/i<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Starter</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .chat-container { max-width: 600px; margin: auto; }
+    .messages { border: 1px solid #ddd; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+    .message { margin-bottom: 8px; }
+    .message.user { text-align: right; }
+    .message.bot { text-align: left; color: blue; }
+  </style>
+</head>
+<body>
+  <h1>Chatbot Starter</h1>
+  <div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <input type="text" id="user-input" placeholder="Digite sua mensagem..." style="width:80%;">
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById('user-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      appendMessage('Você: ' + message, 'user');
+      input.value = '';
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'qwen2.5:7b-instruct',
+          messages: [
+            { role: 'system', content: 'Responda em português do Brasil.' },
+            { role: 'user', content: message }
+          ]
+        })
+      });
+
+      const data = await response.json();
+      appendMessage('Bot: ' + data.reply, 'bot');
+    }
+
+    function appendMessage(text, className) {
+      const messagesDiv = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = 'message ' + className;
+      div.textContent = text;
+      messagesDiv.appendChild(div);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+  </script>
+</body>
+</html>
+ndex.html
